@@ -1,1 +1,1 @@
-worker: yarn server
+worker: yarn start
