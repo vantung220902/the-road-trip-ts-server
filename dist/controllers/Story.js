@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const Story_1 = __importDefault(require("../models/Story"));
-const Logging_1 = __importDefault(require("../utils/Logging"));
 const coudinary_1 = __importDefault(require("../utils/coudinary"));
 const insert = async (req, res) => {
     const { title } = req.body;
@@ -28,7 +27,6 @@ const insert = async (req, res) => {
             time_created: new Date().getDate()
         });
         await newStory.save();
-        Logging_1.default.info('Create Story Successfully');
         const result = {
             successful: true,
             message: `Successfully created post`
@@ -40,7 +38,6 @@ const insert = async (req, res) => {
             successful: false,
             message: e.message
         };
-        Logging_1.default.error(error);
         return res.status(500).json(error);
     }
 };
@@ -66,7 +63,6 @@ const getStories = async (_req, res) => {
             successful: false,
             message: e.message
         };
-        Logging_1.default.error(error);
         return res.status(500).json(error);
     }
 };

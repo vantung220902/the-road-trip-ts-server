@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import Post, { IPostModel } from '../models/Post';
-import Logging from '../utils/Logging';
 import IResponse from './../types/ReturnType';
 import { Response, Request } from 'express';
 import cloudinaryImageUploadMethod from '../utils/coudinary';
@@ -41,7 +40,6 @@ const insertPost = async (req: Request, res: Response) => {
             successful: false,
             message: e.message
         };
-        Logging.error(error);
         return res.status(500).json(error);
     }
 };
@@ -70,7 +68,6 @@ const getPosts = async (req: Request, res: Response) => {
             successful: false,
             message: e.message
         };
-        Logging.error(error);
         return res.status(500).json(error);
     }
 };
@@ -101,7 +98,6 @@ const getPostById = async (req: Request, res: Response) => {
             successful: false,
             message: e.message
         };
-        Logging.error(error);
         return res.status(500).json(error);
     }
 };
@@ -125,7 +121,6 @@ const getPostUser = async (req: Request, res: Response) => {
             successful: false,
             message: e.message
         };
-        Logging.error(error);
         return res.status(500).json(error);
     }
 };
@@ -143,7 +138,6 @@ const softDelete = async (req: Request, res: Response) => {
             successful: false,
             message: e.message
         };
-        Logging.error(error);
         return res.status(500).json(error);
     }
 };
@@ -164,7 +158,6 @@ const updatePost = async (req: Request, res: Response) => {
             successful: false,
             message: e.message
         };
-        Logging.error(error);
         return res.status(500).json(error);
     }
 };
@@ -183,7 +176,6 @@ const deleted = async (req: Request, res: Response) => {
             successful: false,
             message: e.message
         };
-        Logging.error(error);
         return res.status(500).json(error);
     }
 };
@@ -201,7 +193,6 @@ const recovery = async (req: Request, res: Response) => {
             successful: false,
             message: e.message
         };
-        Logging.error(error);
         return res.status(500).json(error);
     }
 };

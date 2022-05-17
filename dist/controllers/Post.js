@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const Post_1 = __importDefault(require("../models/Post"));
-const Logging_1 = __importDefault(require("../utils/Logging"));
 const coudinary_1 = __importDefault(require("../utils/coudinary"));
 const error = {
     successful: false,
@@ -45,7 +44,6 @@ const insertPost = async (req, res) => {
             successful: false,
             message: e.message
         };
-        Logging_1.default.error(error);
         return res.status(500).json(error);
     }
 };
@@ -74,7 +72,6 @@ const getPosts = async (req, res) => {
             successful: false,
             message: e.message
         };
-        Logging_1.default.error(error);
         return res.status(500).json(error);
     }
 };
@@ -106,7 +103,6 @@ const getPostById = async (req, res) => {
             successful: false,
             message: e.message
         };
-        Logging_1.default.error(error);
         return res.status(500).json(error);
     }
 };
@@ -131,7 +127,6 @@ const getPostUser = async (req, res) => {
             successful: false,
             message: e.message
         };
-        Logging_1.default.error(error);
         return res.status(500).json(error);
     }
 };
@@ -151,7 +146,6 @@ const softDelete = async (req, res) => {
             successful: false,
             message: e.message
         };
-        Logging_1.default.error(error);
         return res.status(500).json(error);
     }
 };
@@ -173,7 +167,6 @@ const updatePost = async (req, res) => {
             successful: false,
             message: e.message
         };
-        Logging_1.default.error(error);
         return res.status(500).json(error);
     }
 };
@@ -194,7 +187,6 @@ const deleted = async (req, res) => {
             successful: false,
             message: e.message
         };
-        Logging_1.default.error(error);
         return res.status(500).json(error);
     }
 };
@@ -214,7 +206,6 @@ const recovery = async (req, res) => {
             successful: false,
             message: e.message
         };
-        Logging_1.default.error(error);
         return res.status(500).json(error);
     }
 };

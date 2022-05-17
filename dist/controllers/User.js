@@ -7,7 +7,6 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const User_1 = __importDefault(require("../models/User"));
 const argon2_1 = __importDefault(require("argon2"));
 const auth_1 = require("../utils/auth");
-const Logging_1 = __importDefault(require("./../utils/Logging"));
 const jwt_decode_1 = __importDefault(require("jwt-decode"));
 const jsonwebtoken_1 = require("jsonwebtoken");
 const coudinary_1 = __importDefault(require("../utils/coudinary"));
@@ -42,7 +41,6 @@ const registerUser = async (req, res) => {
         return res.status(200).json(result);
     }
     catch (e) {
-        Logging_1.default.error(e);
         const error = {
             successful: false,
             message: `Duplicated email address`
@@ -82,7 +80,6 @@ const login = async (req, res) => {
         return res.status(200).json(response);
     }
     catch (e) {
-        Logging_1.default.error(e);
         const error = {
             successful: false,
             message: `Server error: ${e.message}`
@@ -149,7 +146,6 @@ const updateUser = async (req, res) => {
         return res.status(404).json(error);
     }
     catch (e) {
-        Logging_1.default.error(e);
         const error = {
             successful: false,
             message: `Server error: ${e.message}`

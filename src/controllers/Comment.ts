@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import Comment, { ICommentModel } from '../models/Comments';
-import Logging from '../utils/Logging';
 import { ICommentReturn } from './../types/Comment/CommentType';
 import { Response, Request } from 'express';
 const insertComment = async (req: Request, res: Response) => {
@@ -22,7 +21,6 @@ const insertComment = async (req: Request, res: Response) => {
             time_created: new Date().getDate()
         });
         await newComment.save();
-        Logging.info('Create Comment Successfully');
         const comment = <ICommentModel>await Comment.findOne({ _id: newComment._id })
             .populate('userId', '_id fullName avatar_url');
         const result: ICommentReturn = {
@@ -37,7 +35,6 @@ const insertComment = async (req: Request, res: Response) => {
             message: e.message,
             data: null
         };
-        Logging.error(error);
         return res.status(500).json(error);
     }
 };
@@ -56,7 +53,6 @@ const getComments = async (req: Request, res: Response) => {
             message: e.message,
             data: null
         };
-        Logging.error(error);
         return res.status(500).json(error);
     }
 };

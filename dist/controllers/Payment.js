@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const Payment_1 = __importDefault(require("../models/Payment"));
 const User_1 = __importDefault(require("../models/User"));
-const Logging_1 = __importDefault(require("../utils/Logging"));
 const argon2_1 = __importDefault(require("argon2"));
 const insertPayment = async (req, res) => {
     const { sum, number, password, ticket } = req.body;
@@ -34,7 +33,6 @@ const insertPayment = async (req, res) => {
             userId
         });
         await newPayment.save();
-        Logging_1.default.info('Create Payment Successfully');
         const chat = await Payment_1.default.findOne({ _id: newPayment._id }).populate('ticket', '_id name').populate('userId', '_id fullName avatar_url');
         const result = {
             successful: true,
@@ -49,7 +47,6 @@ const insertPayment = async (req, res) => {
             message: e.message,
             data: null
         };
-        Logging_1.default.error(error);
         return res.status(500).json(error);
     }
 };
@@ -75,7 +72,6 @@ const getPayments = async (req, res) => {
             message: e.message,
             data: null
         };
-        Logging_1.default.error(error);
         return res.status(500).json(error);
     }
 };

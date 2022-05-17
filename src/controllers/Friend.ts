@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import Friend, { IFriendModel } from '../models/Friend';
-import Logging from '../utils/Logging';
 import IResponse from './../types/ReturnType';
 import { Response, Request } from 'express';
 
@@ -24,7 +23,6 @@ const checkStatusFriend = async (req: Request, res: Response) => {
             successful: false,
             message: e.message
         };
-        Logging.error(error);
         return res.status(500).json(error);
     }
 };
@@ -64,14 +62,12 @@ const actionFriend = async (req: Request, res: Response) => {
             successful: false,
             message: e.message
         };
-        Logging.error(error);
         return res.status(500).json(error);
     }
 };
 
 const getInvitations = async (_req: Request, res: Response) => {
     try {
-        Logging.info('ZO');
         const { userId } = res.locals;
         const invitations = <IFriendModel[]>await Friend.find({
             $and: [{ receiver: userId }, { status:0 }]
@@ -87,7 +83,6 @@ const getInvitations = async (_req: Request, res: Response) => {
             successful: false,
             message: e.message
         };
-        Logging.error(error);
         return res.status(500).json(error);
     }
 };
@@ -108,7 +103,6 @@ const getFriends = async (_req: Request, res: Response) => {
             successful: false,
             message: e.message
         };
-        Logging.error(error);
         return res.status(500).json(error);
     }
 };
@@ -136,7 +130,6 @@ const actionInviting = async (req: Request, res: Response) => {
             successful: false,
             message: e.message
         };
-        Logging.error(error);
         return res.status(500).json(error);
     }
 };

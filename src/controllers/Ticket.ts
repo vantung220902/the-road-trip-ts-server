@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import Ticket, { ITicketModel } from '../models/Ticket';
-import Logging from '../utils/Logging';
 import IResponse from './../types/ReturnType';
 import { Response, Request } from 'express';
 import cloudinaryImageUploadMethod from '../utils/coudinary';
@@ -45,7 +44,6 @@ const insertTicket = async (req: Request, res: Response) => {
             successful: false,
             message: e.message
         };
-        Logging.error(error);
         return res.status(500).json(error);
     }
 };
@@ -74,7 +72,6 @@ const getTickets = async (req: Request, res: Response) => {
             successful: false,
             message: e.message
         };
-        Logging.error(error);
         return res.status(500).json(error);
     }
 };

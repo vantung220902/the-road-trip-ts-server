@@ -14,7 +14,6 @@
   "dependencies": {
     "@types/morgan": "^1.9.3",
     "argon2": "^0.28.5",
-    "chalk": "^5.0.1",
     "cloudinary": "^1.29.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",

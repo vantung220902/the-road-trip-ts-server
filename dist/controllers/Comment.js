@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const Comments_1 = __importDefault(require("../models/Comments"));
-const Logging_1 = __importDefault(require("../utils/Logging"));
 const insertComment = async (req, res) => {
     const { body, postId } = req.body;
     const { userId } = res.locals;
@@ -26,7 +25,6 @@ const insertComment = async (req, res) => {
             time_created: new Date().getDate()
         });
         await newComment.save();
-        Logging_1.default.info('Create Comment Successfully');
         const comment = await Comments_1.default.findOne({ _id: newComment._id })
             .populate('userId', '_id fullName avatar_url');
         const result = {
@@ -42,7 +40,6 @@ const insertComment = async (req, res) => {
             message: e.message,
             data: null
         };
-        Logging_1.default.error(error);
         return res.status(500).json(error);
     }
 };
@@ -62,7 +59,6 @@ const getComments = async (req, res) => {
             message: e.message,
             data: null
         };
-        Logging_1.default.error(error);
         return res.status(500).json(error);
     }
 };

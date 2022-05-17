@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from 'express';
 import IResponse from '../types/ReturnType';
 import { Secret, verify } from 'jsonwebtoken';
 import { UserAuthPayload } from '../types/User/UserAuthPayload';
-import Logging from './../utils/Logging';
 export const checkAuth = (req: Request, res: Response, next: NextFunction) => {
     try {
         const authorHeader = req.header('Authorization');
@@ -16,7 +15,6 @@ export const checkAuth = (req: Request, res: Response, next: NextFunction) => {
         res.locals.userId = decodedUser.userId;
         return next();
     } catch (e) {
-        Logging.error(e);
         const error: IResponse = {
             successful: false,
             message: 'Error Server '

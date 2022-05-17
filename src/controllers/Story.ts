@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import Story, { IStoryModel } from '../models/Story';
-import Logging from '../utils/Logging';
 import IResponse from './../types/ReturnType';
 import { Response, Request } from 'express';
 import cloudinaryImageUploadMethod from '../utils/coudinary';
@@ -25,7 +24,6 @@ const insert = async (req: Request, res: Response) => {
             time_created: new Date().getDate()
         });
         await newStory.save();
-        Logging.info('Create Story Successfully');
         const result: IResponse = {
             successful: true,
             message: `Successfully created post`
@@ -36,7 +34,6 @@ const insert = async (req: Request, res: Response) => {
             successful: false,
             message: e.message
         };
-        Logging.error(error);
         return res.status(500).json(error);
     }
 };
@@ -59,7 +56,6 @@ const getStories = async (_req: Request, res: Response) => {
             successful: false,
             message: e.message
         };
-        Logging.error(error);
         return res.status(500).json(error);
     }
 };

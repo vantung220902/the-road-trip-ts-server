@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const Friend_1 = __importDefault(require("../models/Friend"));
-const Logging_1 = __importDefault(require("../utils/Logging"));
 const checkStatusFriend = async (req, res) => {
     try {
         const { receiver } = req.query;
@@ -27,7 +26,6 @@ const checkStatusFriend = async (req, res) => {
             successful: false,
             message: e.message
         };
-        Logging_1.default.error(error);
         return res.status(500).json(error);
     }
 };
@@ -68,13 +66,11 @@ const actionFriend = async (req, res) => {
             successful: false,
             message: e.message
         };
-        Logging_1.default.error(error);
         return res.status(500).json(error);
     }
 };
 const getInvitations = async (_req, res) => {
     try {
-        Logging_1.default.info('ZO');
         const { userId } = res.locals;
         const invitations = await Friend_1.default.find({
             $and: [{ receiver: userId }, { status: 0 }]
@@ -91,7 +87,6 @@ const getInvitations = async (_req, res) => {
             successful: false,
             message: e.message
         };
-        Logging_1.default.error(error);
         return res.status(500).json(error);
     }
 };
@@ -113,7 +108,6 @@ const getFriends = async (_req, res) => {
             successful: false,
             message: e.message
         };
-        Logging_1.default.error(error);
         return res.status(500).json(error);
     }
 };
@@ -142,7 +136,6 @@ const actionInviting = async (req, res) => {
             successful: false,
             message: e.message
         };
-        Logging_1.default.error(error);
         return res.status(500).json(error);
     }
 };

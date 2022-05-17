@@ -10,7 +10,6 @@ const morgan_1 = __importDefault(require("morgan"));
 const path_1 = __importDefault(require("path"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const config_1 = __importDefault(require("./config"));
-const Logging_1 = __importDefault(require("./utils/Logging"));
 const routes_1 = __importDefault(require("./routes"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const socket_io_1 = require("socket.io");
@@ -21,12 +20,12 @@ mongoose_1.default
     retryWrites: true
 })
     .then(() => {
-    Logging_1.default.info('Connected to Mong');
+    console.log('Connected to Mong');
     StartServer();
 })
     .catch((err) => {
     console.log(err);
-    Logging_1.default.error('Error connecting to MongoDB');
+    console.error('Error connecting to MongoDB');
 });
 const StartServer = () => {
     app.use((0, morgan_1.default)('dev'));
@@ -38,7 +37,7 @@ const StartServer = () => {
     (0, routes_1.default)(app);
     app.use((_req, res) => {
         const error = new Error('not found');
-        Logging_1.default.error(error);
+        console.error(error);
         return res.status(404).json({ message: error.message });
     });
     const server = http_1.default.createServer(app);
@@ -51,29 +50,29 @@ const StartServer = () => {
     io.on('connection', (socket) => {
         socket.on('join_room', (data) => {
             socket.join(data);
-            Logging_1.default.info(`User with ID ${socket.id} joined room ${data}`);
+            console.log(`User with ID ${socket.id} joined room ${data}`);
         });
         socket.on('leave_room', (data) => {
             socket.leave(data);
-            Logging_1.default.info(`User with ID ${socket.id} leave room ${data}`);
+            console.log(`User with ID ${socket.id} leave room ${data}`);
         });
-        Logging_1.default.info(`Use connected: ${socket.id}`);
+        console.log(`Use connected: ${socket.id}`);
         socket.on('send_message', (data) => {
-            Logging_1.default.info(data);
+            console.log(data);
             socket.to('Message').emit('receive_message', { data });
         });
         socket.on('send_inviting', (data) => {
-            Logging_1.default.info(data);
+            console.log(data);
             socket.to('Inviting').emit('receive_inviting', { data });
         });
         socket.on('send_post', (data) => {
-            Logging_1.default.info(data);
+            console.log(data);
             socket.to('Post').emit('receive_post', { data });
         });
         socket.on('disconnect', () => {
-            Logging_1.default.warn(`User disconnected ${socket.id} `);
+            console.log(`User disconnected ${socket.id} `);
         });
     });
-    server.listen(config_1.default.server.port, () => Logging_1.default.log(`Server is running on port ${config_1.default.server.port}.`));
+    server.listen(config_1.default.server.port, () => console.log(`Server is running on port ${config_1.default.server.port}.`));
 };
 //# sourceMappingURL=index.js.map

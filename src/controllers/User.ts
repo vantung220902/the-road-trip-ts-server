@@ -5,7 +5,6 @@ import { LoginType, RegisterType } from '../types/User/UserType';
 import IResponse from '../types/ReturnType';
 import argon2 from 'argon2';
 import { createToken, sendRefreshToken } from '../utils/auth';
-import Logging from './../utils/Logging';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import { verify, Secret } from 'jsonwebtoken';
 import { UserAuthPayload } from '../types/User/UserAuthPayload';
@@ -41,7 +40,6 @@ const registerUser = async (req: Request, res: Response) => {
 
         return res.status(200).json(result);
     } catch (e) {
-        Logging.error(e);
         const error: RegisterType = {
             successful: false,
             message: `Duplicated email address`
@@ -78,7 +76,6 @@ const login = async (req: Request, res: Response) => {
         };
         return res.status(200).json(response);
     } catch (e) {
-        Logging.error(e);
         const error: IResponse = {
             successful: false,
             message: `Server error: ${e.message}`
@@ -144,7 +141,6 @@ const updateUser = async (req: Request, res: Response) => {
 
         return res.status(404).json(error);
     } catch (e) {
-       Logging.error(e);
        const error: IResponse = {
            successful: false,
            message: `Server error: ${e.message}`

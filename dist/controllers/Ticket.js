@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const Ticket_1 = __importDefault(require("../models/Ticket"));
-const Logging_1 = __importDefault(require("../utils/Logging"));
 const coudinary_1 = __importDefault(require("../utils/coudinary"));
 const error = {
     successful: false,
@@ -48,7 +47,6 @@ const insertTicket = async (req, res) => {
             successful: false,
             message: e.message
         };
-        Logging_1.default.error(error);
         return res.status(500).json(error);
     }
 };
@@ -77,7 +75,6 @@ const getTickets = async (req, res) => {
             successful: false,
             message: e.message
         };
-        Logging_1.default.error(error);
         return res.status(500).json(error);
     }
 };

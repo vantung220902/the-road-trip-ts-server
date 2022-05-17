@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const Chat_1 = __importDefault(require("../models/Chat"));
-const Logging_1 = __importDefault(require("../utils/Logging"));
 const insertMessage = async (req, res) => {
     const { body, receiver } = req.body;
     const { userId } = res.locals;
@@ -26,7 +25,6 @@ const insertMessage = async (req, res) => {
             time_created: new Date().getDate()
         });
         await newChat.save();
-        Logging_1.default.info('Create Message Successfully');
         const chat = await Chat_1.default.findOne({ _id: newChat._id }).populate('receiver', '_id fullName avatar_url')
             .populate('sender', '_id fullName avatar_url');
         const result = {
@@ -42,7 +40,6 @@ const insertMessage = async (req, res) => {
             message: e.message,
             data: null
         };
-        Logging_1.default.error(error);
         return res.status(500).json(error);
     }
 };
@@ -66,7 +63,6 @@ const getMessage = async (req, res) => {
             message: e.message,
             data: null
         };
-        Logging_1.default.error(error);
         return res.status(500).json(error);
     }
 };

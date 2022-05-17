@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import Chat, { IChatModel } from '../models/Chat';
-import Logging from '../utils/Logging';
 import { ICommentReturn } from './../types/Comment/CommentType';
 import { Response, Request } from 'express';
 const insertMessage = async (req: Request, res: Response) => {
@@ -22,7 +21,6 @@ const insertMessage = async (req: Request, res: Response) => {
             time_created: new Date().getDate()
         });
         await newChat.save();
-        Logging.info('Create Message Successfully');
         const chat = <IChatModel>await Chat.findOne({ _id: newChat._id }).populate('receiver', '_id fullName avatar_url')
             .populate('sender', '_id fullName avatar_url');
         const result = {
@@ -37,7 +35,6 @@ const insertMessage = async (req: Request, res: Response) => {
             message: e.message,
             data: null
         };
-        Logging.error(error);
         return res.status(500).json(error);
     }
 
@@ -61,7 +58,6 @@ const getMessage = async (req: Request, res: Response) => {
             message: e.message,
             data: null
         };
-        Logging.error(error);
         return res.status(500).json(error);
     }
 };
