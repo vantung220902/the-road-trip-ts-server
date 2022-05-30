@@ -85,11 +85,13 @@ const getPostById = async (req, res) => {
             $and: [{ userId: userId }, { title: { $regex: query, $options: 'i' } }, { deleted: check }]
         })
             .populate('userId', '_id fullName avatar_url address')
+            .sort({ _id: -1 })
             .limit(5)
             .skip(5 * parseInt(paging, 10)) : await Post_1.default.find({
             $and: [{ userId: userId }, { deleted: check }]
         })
             .populate('userId', '_id fullName avatar_url address')
+            .sort({ _id: -1 })
             .limit(5)
             .skip(5 * parseInt(paging, 10));
         return res.status(200).json({
@@ -175,8 +177,7 @@ const deleted = async (req, res) => {
         const { _id } = req.query;
         if (!_id)
             return res.status(404).send(error);
-        console.log(_id);
-        await Post_1.default.deleteMany();
+        await Post_1.default.deleteOne({ _id });
         return res.status(200).json({
             successful: true,
             message: 'Deleted Post Successfully'

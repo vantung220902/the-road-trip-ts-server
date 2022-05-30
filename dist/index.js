@@ -58,16 +58,16 @@ const StartServer = () => {
         });
         console.log(`Use connected: ${socket.id}`);
         socket.on('send_message', (data) => {
-            console.log(data);
             socket.to('Message').emit('receive_message', { data });
         });
         socket.on('send_inviting', (data) => {
-            console.log(data);
             socket.to('Inviting').emit('receive_inviting', { data });
         });
         socket.on('send_post', (data) => {
-            console.log(data);
             socket.to('Post').emit('receive_post', { data });
+        });
+        socket.on('send_ticket', (data) => {
+            socket.to('Ticket').emit('receive_ticket', { data });
         });
         socket.on('disconnect', () => {
             console.log(`User disconnected ${socket.id} `);

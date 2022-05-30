@@ -78,5 +78,23 @@ const getTickets = async (req, res) => {
         return res.status(500).json(error);
     }
 };
-exports.default = { insertTicket, getTickets };
+const getTicketById = async (_req, res) => {
+    try {
+        const { userId } = res.locals;
+        const posts = await Ticket_1.default.find({ author: userId }).populate('author', '_id fullName avatar_url').sort({ _id: -1 });
+        return res.status(200).json({
+            successful: true,
+            message: 'Get Tickets Successfully',
+            data: posts
+        });
+    }
+    catch (e) {
+        const error = {
+            successful: false,
+            message: e.message
+        };
+        return res.status(500).json(error);
+    }
+};
+exports.default = { insertTicket, getTickets, getTicketById };
 //# sourceMappingURL=Ticket.js.map

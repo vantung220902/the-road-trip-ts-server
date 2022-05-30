@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import Payment, { IPaymentModel } from '../models/Payment';
 import User from '../models/User';
+import Ticket, { ITicketModel } from '../models/Ticket';
 import { IPaymentReturn } from './../types/Payment/PaymentType';
 import { Response, Request } from 'express';
 import argon2 from 'argon2';
@@ -31,6 +32,8 @@ const insertPayment = async (req: Request, res: Response) => {
             userId
         });
         await newPayment.save();
+        const itemTicket = <ITicketModel>await Ticket.findOne({ _id: ticket });
+        await Ticket.updateOne({ _id: ticket }, { rest: itemTicket.rest - number });
         const chat = <IPaymentModel>await Payment.findOne({ _id: newPayment._id }).populate('ticket', '_id name').populate('userId', '_id fullName avatar_url');
         const result: IPaymentReturn = {
             successful: true,

@@ -7,7 +7,6 @@ const error: IResponse = {
     successful: false,
     message: 'Server Error Please check your information'
 };
-
 const insertTicket = async (req: Request, res: Response) => {
     const { name, price, address, date, rest, description } = req.body;
     const { userId } = res.locals;
@@ -75,5 +74,21 @@ const getTickets = async (req: Request, res: Response) => {
         return res.status(500).json(error);
     }
 };
-
-export default { insertTicket, getTickets };
+const getTicketById = async (_req: Request, res: Response) => {
+    try {
+        const { userId } = res.locals;
+        const posts = <ITicketModel[]>await Ticket.find({ author: userId }).populate('author', '_id fullName avatar_url').sort({ _id: -1 });
+        return res.status(200).json({
+            successful: true,
+            message: 'Get Tickets Successfully',
+            data: posts
+        });
+    } catch (e) {
+        const error: IResponse = {
+            successful: false,
+            message: e.message
+        };
+        return res.status(500).json(error);
+    }
+};
+export default { insertTicket, getTickets, getTicketById };
